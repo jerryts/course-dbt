@@ -1,0 +1,182 @@
+version: 2
+
+models:
+  - name: stg_users
+    description: Contact information and timestamps about each user 
+    columns:
+      - name: user_id
+        tests:
+          - not_null
+          - unique
+      - name: first_name
+        tests:
+          - not_null
+      - name: last_name
+        tests:
+          - not_null
+      - name: email
+        tests:
+          - not_null
+      - name: created_at
+        tests:
+          - not_null
+      - name: address_id
+        tests:
+          - relationships:
+              to: ref('stg_addresses')
+              field: address_id
+
+  - name: stg_events
+    description: Events associated with users
+    columns:
+      - name: event_id
+        tests:
+          - not_null
+          - unique
+      - name: session_id
+        tests:
+          - not_null
+      - name: event_type
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['add_to_cart', 'checkout', 'package_shipped', 'page_view']
+      - name: created_at
+        tests:
+          - not_null
+      - name: user_id
+        tests:
+          - relationships:
+              to: ref('stg_users')
+              field: user_id
+      - name: order_id
+        tests:
+          - relationships:
+              to: ref('stg_orders')
+              field: order_id
+      - name: product_id
+        tests:
+          - relationships:
+              to: ref('stg_products')
+              field: product_id
+
+
+  - name: stg_addresses
+    description: Postal information associated with a user address
+    columns:
+      - name: address_id
+        tests:
+          - not_null
+          - unique
+      - name: address
+        tests:
+          - not_null
+      - name: zipcode
+        tests:
+          - not_null
+
+  - name: stg_orders
+    description: Order information about orders placed by users
+    columns:
+      - name: order_id
+        tests:
+          - not_null
+          - unique
+      - name: promo_id
+        tests:
+          - relationships:
+              to: ref('stg_promos')
+              field: promo_id
+      - name: user_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_users')
+              field: user_id
+      - name: address_id
+        tests:
+          - relationships:
+              to: ref('stg_addresses')
+              field: address_id
+      - name: created_at
+        tests:
+          - not_null
+      - name: order_total
+        tests:
+          - not_null
+      - name: shipping_service
+        tests:
+          - accepted_values:
+              values: ['dhl', 'fedex', 'ups', 'usps']
+      - name: status
+        tests:
+          - accepted_values:
+              values: ['delivered', 'preparing', 'shipped']
+
+  - name: stg_products
+    description: Products available for orders
+    columns:
+      - name: product_id
+        tests:
+          - not_null
+          - unique
+      - name: price
+        tests:
+          - not_null
+
+  - name: stg_order_items
+    description: Join table between orders and products
+    tests:
+      # Since order_items is a join table, test uniqueness of join fields
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - order_id
+            - product_id
+    columns:
+      - name: order_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_orders')
+              field: order_id
+      - name: product_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_products')
+              field: product_id
+      - name: quantity
+        tests:
+          - not_null
+
+  - name: stg_promos
+    description: Discount information associated for each promo
+    columns:
+      - name: promo_id
+        tests:
+          - not_null
+          - unique
+      - name: discount
+        tests:
+          - not_null
+      - name: status
+        tests:
+          - accepted_values:
+              values: ['active', 'inactive']
+
+
+
+  - name: stg_superheroes
+    description: Demographics about each superhero such as name, hair color, height and weight. 
+    columns:
+      - name: name
+        tests:
+          - not_null
+      - name: height
+        tests:
+          - positive_values
+      - name: weight_lbs
+        tests:
+          - positive_values
+
+
