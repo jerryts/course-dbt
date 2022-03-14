@@ -1,4 +1,6 @@
-## Week 1 answers to questions
+## Jerry Tsai is enjoying corise's dbt course
+
+### Week 1 answers to questions
 
     -- (1) How many users do we have?
     -- 130
