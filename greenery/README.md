@@ -44,7 +44,7 @@ FROM
   WHERE
     delivered_at IS NOT NULL
   ) AS delivered_orders
-  ;
+;
 ```
 
 #### (4) How many users have only made one purchase? Two purchases? Three+ purchases?
