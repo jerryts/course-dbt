@@ -5,7 +5,7 @@
 }}
 
 SELECT 
-    order_id,
-    product_id,
-    quantity
+    order_id
+  , product_id
+  , quantity
 FROM {{ source('business', 'order_items') }}

@@ -5,9 +5,9 @@
 }}
 
 SELECT 
-    address_id,
-    address,
-    zipcode,
-    state,
-    country
+    address_id
+  , address
+  , zipcode
+  , state
+  , country
 FROM {{ source('business', 'addresses') }}

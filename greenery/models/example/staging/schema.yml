@@ -1,66 +1,6 @@
 version: 2
 
 models:
-  - name: stg_users
-    description: Contact information and timestamps about each user 
-    columns:
-      - name: user_id
-        tests:
-          - not_null
-          - unique
-      - name: first_name
-        tests:
-          - not_null
-      - name: last_name
-        tests:
-          - not_null
-      - name: email
-        tests:
-          - not_null
-      - name: created_at
-        tests:
-          - not_null
-      - name: address_id
-        tests:
-          - relationships:
-              to: ref('stg_addresses')
-              field: address_id
-
-  - name: stg_events
-    description: Events associated with users
-    columns:
-      - name: event_id
-        tests:
-          - not_null
-          - unique
-      - name: session_id
-        tests:
-          - not_null
-      - name: event_type
-        tests:
-          - not_null
-          - accepted_values:
-              values: ['add_to_cart', 'checkout', 'package_shipped', 'page_view']
-      - name: created_at
-        tests:
-          - not_null
-      - name: user_id
-        tests:
-          - relationships:
-              to: ref('stg_users')
-              field: user_id
-      - name: order_id
-        tests:
-          - relationships:
-              to: ref('stg_orders')
-              field: order_id
-      - name: product_id
-        tests:
-          - relationships:
-              to: ref('stg_products')
-              field: product_id
-
-
   - name: stg_addresses
     description: Postal information associated with a user address
     columns:
@@ -74,55 +14,43 @@ models:
       - name: zipcode
         tests:
           - not_null
+      - name: state
+      - name: country
 
-  - name: stg_orders
-    description: Order information about orders placed by users
+  - name: stg_events
+    description: Events associated with users
     columns:
-      - name: order_id
+      - name: event_id
         tests:
           - not_null
           - unique
-      - name: promo_id
-        tests:
-          - relationships:
-              to: ref('stg_promos')
-              field: promo_id
-      - name: user_id
+      - name: session_id
         tests:
           - not_null
+      - name: user_id
+        tests:
           - relationships:
               to: ref('stg_users')
               field: user_id
-      - name: address_id
+      - name: event_type
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['add_to_cart', 'checkout', 'package_shipped', 'page_view']
+      - name: event_page_url
+      - name: event_created_at_utc
+        tests:
+          - not_null
+      - name: order_id
         tests:
           - relationships:
-              to: ref('stg_addresses')
-              field: address_id
-      - name: created_at
-        tests:
-          - not_null
-      - name: order_total
-        tests:
-          - not_null
-      - name: shipping_service
-        tests:
-          - accepted_values:
-              values: ['dhl', 'fedex', 'ups', 'usps']
-      - name: status
-        tests:
-          - accepted_values:
-              values: ['delivered', 'preparing', 'shipped']
-
-  - name: stg_products
-    description: Products available for orders
-    columns:
+              to: ref('stg_orders')
+              field: order_id
       - name: product_id
         tests:
-          - not_null
-          - unique
-      - name: price
-        tests:
-          - not_null
+          - relationships:
+              to: ref('stg_products')
+              field: product_id
 
   - name: stg_order_items
     description: Join table between orders and products
@@ -149,6 +77,62 @@ models:
         tests:
           - not_null
 
+  - name: stg_orders
+    description: Order information about orders placed by users
+    columns:
+      - name: order_id
+        tests:
+          - not_null
+          - unique
+      - name: promo_id
+        tests:
+          - relationships:
+              to: ref('stg_promos')
+              field: promo_id
+      - name: user_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_users')
+              field: user_id
+      - name: address_id
+        tests:
+          - relationships:
+              to: ref('stg_addresses')
+              field: address_id
+      - name: order_created_at_utc
+        tests:
+          - not_null
+      - name: order_cost_usd
+      - name: shipping_cost_usd
+      - name: order_total_usd
+        tests:
+          - not_null
+      - name: tracking_id
+      - name: shipping_service
+        tests:
+          - accepted_values:
+              values: ['dhl', 'fedex', 'ups', 'usps']
+      - name: estimated_delivery_at_utc
+      - name: delivered_at_utc
+      - name: order_status
+        tests:
+          - accepted_values:
+              values: ['delivered', 'preparing', 'shipped']
+
+  - name: stg_products
+    description: Products available for orders
+    columns:
+      - name: product_id
+        tests:
+          - not_null
+          - unique
+      - name: product_name
+      - name: product_price_usd
+        tests:
+          - not_null
+      - name: inventory
+
   - name: stg_promos
     description: Discount information associated for each promo
     columns:
@@ -156,13 +140,41 @@ models:
         tests:
           - not_null
           - unique
-      - name: discount
+      - name: promo_discount_usd
         tests:
           - not_null
-      - name: status
+      - name: promo_status
         tests:
           - accepted_values:
               values: ['active', 'inactive']
+
+  - name: stg_users
+    description: Contact information and timestamps about each user 
+    columns:
+      - name: user_id
+        tests:
+          - not_null
+          - unique
+      - name: first_name
+        tests:
+          - not_null
+      - name: last_name
+        tests:
+          - not_null
+      - name: email
+        tests:
+          - not_null
+      - name: phone_numer
+      - name: user_created_at_utc
+        tests:
+          - not_null
+      - name: user_updated_at_utc
+      - name: address_id
+        tests:
+          - relationships:
+              to: ref('stg_addresses')
+              field: address_id
+
 
 
 
