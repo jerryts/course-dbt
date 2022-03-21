@@ -14,7 +14,7 @@ models:
         tests:
           - not_null        
 
-  - name: fct_product_cross_sectional_funnel
+  - name: dim_product_cross_sectional_funnel
     description: grain -> products
     columns:
       - name: product_id
