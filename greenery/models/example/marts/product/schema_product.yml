@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: int_product_funnel_events
+    description: grain -> events for products
+    columns:
+      - name: event_id
+      - name: session_id
+      - name: user_id
+      - name: event_type
+      - name: event_page_url
+      - name: event_created_at_utc
+      - name: product_id
+        tests:
+          - not_null        
+
+  - name: fct_product_cross_sectional_funnel
+    description: grain -> products
+    columns:
+      - name: product_id
+      - name: product_name
+      - name: product_price_usd
+      - name: num_sessions_viewed_page
+      - name: num_sessions_added_to_cart
+      - name: num_sessions_checked_out
+      - name: added_to_cart_rate
+      - name: checked_out_rate

@@ -1,30 +1,30 @@
 version: 2
 
-# models:
-#   - name: 
-#     description: grain -> order items of orders
-#     columns:
-#       - name: order_id
-#       - name: promo_id
-#       - name: user_id
-#       - name: address_id
-#       - name: order_created_at_utc
-#       - name: order_cost_usd
-#       - name: shipping_cost_usd
-#       - name: order_total_usd
-#       - name: tracking_id
-#       - name: shipping_service
-#       - name: estimated_delivery_at_utc
-#       - name: delivered_at_utc
-#       - name: order_status
-#       - name: quantity
-#         tests:
-#           - not_null
-#       - name: product_name
-#         tests:
-#           - not_null
-#       - name: product_price_usd
-#         tests:
-#           - not_null
+models:
+  - name: int_orders_promo_info
+    description: grain -> orders
+    columns:
+      - name: order_id
+      - name: promo_id
+      - name: user_id
+      - name: address_id
+      - name: order_created_at_utc
+      - name: order_cost_usd
+      - name: promo_discount_usd
+      - name: shipping_cost_usd
+      - name: order_total_usd
+      - name: num_distinct_items_ordered
+      - name: num_items_ordered
+      - name: product_names_alphabetical
+      - name: promo_discount_usd
 
+  - name: dim_promos
+    description: grain -> promos
+    columns:
+      - name: promo_id
+      - name: promo_discount_usd
+      - name: num_orders
+      - name: avg_order_cost_usd_per_order
+      - name: avg_num_distinct_items_ordered_per_order
+      - name: avg_num_items_ordered_per_order
 
