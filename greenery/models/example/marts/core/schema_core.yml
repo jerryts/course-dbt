@@ -45,17 +45,17 @@ models:
       - name: order_created_at_utc
       - name: order_cost_usd
       - name: putative_order_cost_usd
-      - name: order_cost_diff
       - name: promo_discount_usd
       - name: shipping_cost_usd
       - name: order_total_usd
       - name: putative_order_total_usd
-      - name: order_total_diff
       - name: tracking_id
       - name: shipping_service
       - name: estimated_delivery_at_utc
       - name: delivered_at_utc
       - name: order_status
+      - name: num_distinct_items_ordered
+      - name: num_items_ordered
       - name: product_names_alphabetical
 
   - name: dim_products
@@ -67,3 +67,29 @@ models:
       - name: inventory
       - name: num_orders
       - name: quantity_ordered
+
+  - name: dim_users
+    description: grain -> users
+    columns:
+      - name: user_id
+      - name: first_name
+      - name: last_name
+      - name: email
+      - name: phone_number
+      - name: user_created_at_utc
+      - name: user_updated_at_utc
+      - name: address_id
+      - name: address
+      - name: zipcode
+      - name: state
+      - name: country
+      - name: num_orders_ever
+      - name: first_order_created_at_utc
+      - name: total_orders_cost_usd
+      - name: total_orders_total_usd
+      - name: total_items_ordered_ever
+      - name: first_event_created_at_utc
+      - name: num_distinct_sessions
+      - name: ever_viewed_page
+      - name: ever_added_product_to_cart
+      - name: ever_checked_out

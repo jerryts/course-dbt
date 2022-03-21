@@ -55,6 +55,10 @@ WITH
   , order_status
   , ROUND(SUM(product_price_usd * quantity)::NUMERIC, 2) AS 
     putative_order_cost_usd
+  , COUNT(1) AS 
+    num_distinct_items_ordered
+  , SUM(quantity) AS 
+    num_items_ordered
   , ARRAY_AGG(product_name ORDER BY product_name) AS 
     product_names_alphabetical
   FROM
@@ -70,20 +74,18 @@ SELECT
 , orders_summarized.order_created_at_utc
 , orders_summarized.order_cost_usd
 , orders_summarized.putative_order_cost_usd
-, orders_summarized.order_cost_usd - orders_summarized.putative_order_cost_usd AS 
-  order_cost_diff
 , stg_promos.promo_discount_usd
 , orders_summarized.shipping_cost_usd
 , orders_summarized.order_total_usd
 , ROUND((orders_summarized.putative_order_cost_usd - COALESCE(stg_promos.promo_discount_usd, 0) + COALESCE(orders_summarized.shipping_cost_usd, 0))::NUMERIC, 2) AS 
   putative_order_total_usd
-, orders_summarized.order_total_usd - ROUND((orders_summarized.putative_order_cost_usd - COALESCE(stg_promos.promo_discount_usd, 0) + COALESCE(orders_summarized.shipping_cost_usd, 0))::NUMERIC, 2) AS 
-  order_total_diff
 , orders_summarized.tracking_id
 , orders_summarized.shipping_service
 , orders_summarized.estimated_delivery_at_utc
 , orders_summarized.delivered_at_utc
 , orders_summarized.order_status
+, orders_summarized.num_distinct_items_ordered
+, orders_summarized.num_items_ordered
 , orders_summarized.product_names_alphabetical
 FROM
   orders_summarized
