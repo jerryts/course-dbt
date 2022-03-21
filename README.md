@@ -1,3 +1,8 @@
+# Answers to questions
+
+Please see [greenery/README.md](greenery/README.md) for answers to project questions.
+
+
 # Analytics engineering with dbt
 
 Template repository for the projects and environment of the course: Analytics engineering with dbt
