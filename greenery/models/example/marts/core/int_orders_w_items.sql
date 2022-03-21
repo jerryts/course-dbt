@@ -58,6 +58,7 @@ SELECT
 , stg_orders.estimated_delivery_at_utc
 , stg_orders.delivered_at_utc
 , stg_orders.order_status
+, stg_order_items.product_id
 , stg_order_items.quantity
 , stg_products.product_name
 , stg_products.product_price_usd

@@ -21,6 +21,7 @@ WITH
   , estimated_delivery_at_utc
   , delivered_at_utc
   , order_status
+  , product_id
   , quantity
   , product_name
   , product_price_usd

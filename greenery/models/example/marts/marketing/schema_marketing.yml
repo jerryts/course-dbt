@@ -1,0 +1,30 @@
+version: 2
+
+# models:
+#   - name: 
+#     description: grain -> order items of orders
+#     columns:
+#       - name: order_id
+#       - name: promo_id
+#       - name: user_id
+#       - name: address_id
+#       - name: order_created_at_utc
+#       - name: order_cost_usd
+#       - name: shipping_cost_usd
+#       - name: order_total_usd
+#       - name: tracking_id
+#       - name: shipping_service
+#       - name: estimated_delivery_at_utc
+#       - name: delivered_at_utc
+#       - name: order_status
+#       - name: quantity
+#         tests:
+#           - not_null
+#       - name: product_name
+#         tests:
+#           - not_null
+#       - name: product_price_usd
+#         tests:
+#           - not_null
+
+

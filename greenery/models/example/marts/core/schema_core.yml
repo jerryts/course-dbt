@@ -17,6 +17,7 @@ models:
       - name: estimated_delivery_at_utc
       - name: delivered_at_utc
       - name: order_status
+      - name: product_id
       - name: quantity
         tests:
           - not_null
@@ -57,3 +58,12 @@ models:
       - name: order_status
       - name: product_names_alphabetical
 
+  - name: dim_products
+    description: grain -> products
+    columns:
+      - name: product_id
+      - name: product_name
+      - name: product_price_usd
+      - name: inventory
+      - name: num_orders
+      - name: quantity_ordered
