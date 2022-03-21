@@ -38,9 +38,9 @@ SELECT
 , stg_products.product_name
 , stg_products.product_price_usd
 , stg_products.inventory
-, COUNT(DISTINCT order_id) AS 
+, COALESCE(COUNT(DISTINCT order_id), 0) AS 
   num_orders
-, SUM(quantity) AS 
+, COALESCE(SUM(quantity), 0) AS 
   quantity_ordered
 FROM
   stg_products
